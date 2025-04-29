@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: google-cloud-config
+data:
+  project_id: "[PROJECT_ID]"
+  region: "us-central1" 
