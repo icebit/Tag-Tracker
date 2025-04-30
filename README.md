@@ -30,8 +30,11 @@ A lightweight RFID tag tracking system for inventory management.
 - Frontend: React with TypeScript, Ionic Framework
 - Backend: Node.js, Express, MongoDB
 - API: RESTful endpoints for tag and item management
+- Deployment: Docker, Google Cloud Run
 
 ## Getting Started
+
+### Local Development
 
 1. Clone the repository
 2. Install dependencies:
@@ -57,6 +60,39 @@ A lightweight RFID tag tracking system for inventory management.
    ```
 
 4. Access the application at `http://localhost:3000`
+
+### Docker Development
+
+1. Build and start the containers:
+   ```bash
+   docker-compose up --build
+   ```
+
+2. Access the application at `http://localhost`
+
+### Google Cloud Run Deployment
+
+1. Install the [Google Cloud SDK](https://cloud.google.com/sdk/docs/install)
+2. Initialize gcloud and set your project:
+   ```bash
+   gcloud init
+   gcloud config set project YOUR_PROJECT_ID
+   ```
+3. Enable required APIs:
+   ```bash
+   gcloud services enable cloudbuild.googleapis.com run.googleapis.com
+   ```
+4. Set up MongoDB Atlas or another MongoDB service and get the connection URI
+5. Update the `cloudbuild.yaml` file with your MongoDB URI and API URL
+6. Deploy using Cloud Build:
+   ```bash
+   gcloud builds submit --config cloudbuild.yaml
+   ```
+
+Note: After deployment, you'll need to:
+1. Get the Cloud Run service URL for the server
+2. Update the `_API_URL` substitution in `cloudbuild.yaml` with the actual server URL
+3. Redeploy the client to use the correct API URL
 
 ## Current Status
 
