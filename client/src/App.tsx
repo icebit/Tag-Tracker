@@ -21,11 +21,13 @@ import { IonReactRouter } from '@ionic/react-router';
 import { 
   homeOutline,
   scanOutline,
-  settingsOutline
+  settingsOutline,
+  cubeOutline
 } from 'ionicons/icons';
 import Home from './pages/Home';
 import Tags from './pages/Tags';
 import Settings from './pages/Settings';
+import Items from './pages/Items';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -76,6 +78,10 @@ const App: React.FC = () => {
                   <IonIcon slot="start" icon={homeOutline} />
                   <IonLabel>Home</IonLabel>
                 </IonItem>
+                <IonItem routerLink="/items" routerDirection="root">
+                  <IonIcon slot="start" icon={cubeOutline} />
+                  <IonLabel>Items</IonLabel>
+                </IonItem>
                 <IonItem routerLink="/tags" routerDirection="root">
                   <IonIcon slot="start" icon={scanOutline} />
                   <IonLabel>Tags</IonLabel>
@@ -92,13 +98,18 @@ const App: React.FC = () => {
             <Route path="/home" exact>
               <Home />
             </Route>
+            <Route path="/items" exact>
+              <Items />
+            </Route>
             <Route path="/tags" exact>
               <Tags />
             </Route>
             <Route path="/settings" exact>
               <Settings />
             </Route>
-            <Redirect exact from="/" to="/home" />
+            <Route exact path="/">
+              <Redirect to="/home" />
+            </Route>
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>

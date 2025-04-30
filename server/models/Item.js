@@ -3,28 +3,19 @@ const mongoose = require('mongoose');
 const itemSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
-    trim: true
+    required: true
   },
-  status: {
-    type: String,
-    enum: ['available', 'in_progress', 'completed'],
-    default: 'available'
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now
-  }
-});
-
-// Update the updatedAt timestamp before saving
-itemSchema.pre('save', function(next) {
-  this.updatedAt = Date.now();
-  next();
+  description: String,
+  category: String,
+  value: Number,
+  owner: String,
+  purchaseDate: Date,
+  tags: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Tag'
+  }]
+}, {
+  timestamps: true
 });
 
 module.exports = mongoose.model('Item', itemSchema); 

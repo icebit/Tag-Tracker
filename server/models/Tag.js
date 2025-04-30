@@ -1,14 +1,11 @@
 const mongoose = require('mongoose');
 
 const tagSchema = new mongoose.Schema({
-  id: {
+  epc: {
     type: String,
     required: true,
-    unique: true
-  },
-  name: {
-    type: String,
-    required: true
+    unique: true,
+    index: true
   },
   status: {
     type: String,
@@ -22,9 +19,23 @@ const tagSchema = new mongoose.Schema({
   lastSeen: {
     type: Date,
     default: Date.now
+  },
+  item: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Item',
+    required: true,
+    index: true
+  },
+  isActive: {
+    type: Boolean,
+    default: true
   }
 }, {
-  timestamps: true
+  timestamps: true,
+  id: false
 });
+
+// Index for faster queries
+tagSchema.index({ item: 1, isActive: 1 });
 
 module.exports = mongoose.model('Tag', tagSchema); 

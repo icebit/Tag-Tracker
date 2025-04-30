@@ -5,6 +5,7 @@ const cors = require('cors');
 const http = require('http');
 const { Server } = require('socket.io');
 const tagRoutes = require('./routes/tags');
+const itemRoutes = require('./routes/items');
 
 const app = express();
 const server = http.createServer(app);
@@ -56,6 +57,7 @@ mongoose.connect(MONGODB_URI, {
 
 // Routes
 app.use('/api/tags', tagRoutes);
+app.use('/api/items', itemRoutes);
 
 // WebSocket Connection
 io.on('connection', (socket) => {
