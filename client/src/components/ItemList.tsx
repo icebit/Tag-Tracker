@@ -19,6 +19,7 @@ import {
   IonSelect,
   IonSelectOption,
   IonText,
+  IonPage,
 } from '@ionic/react';
 import { useState, useEffect } from 'react';
 import { add, trash, create } from 'ionicons/icons';
@@ -61,6 +62,7 @@ const ItemList: React.FC = () => {
   const [editingItem, setEditingItem] = useState<Item | null>(null);
   const [addError, setAddError] = useState<string | null>(null);
   const [editError, setEditError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchItems();
@@ -76,6 +78,8 @@ const ItemList: React.FC = () => {
       setItems(response.data);
     } catch (error) {
       console.error('Error fetching items:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -172,7 +176,7 @@ const ItemList: React.FC = () => {
   };
 
   return (
-    <>
+    <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Item Management</IonTitle>
@@ -192,38 +196,33 @@ const ItemList: React.FC = () => {
       </IonHeader>
 
       <IonContent>
-        <IonList>
-          {filteredItems.map(item => (
-            <IonItem key={item._id}>
-              <IonLabel>
-                <h2>{item.name}</h2>
-                {item.description && <p>{item.description}</p>}
-                {item.category && <p>Category: {item.category}</p>}
-                {item.value && <p>Value: ${item.value}</p>}
-                {item.owner && <p>Owner: {item.owner}</p>}
-                {item.purchaseDate && <p>Purchase Date: {new Date(item.purchaseDate).toLocaleDateString()}</p>}
-                <div>
-                  {item.tags?.map(tag => (
-                    <IonChip key={tag._id} color={getStatusColor(tag.status)}>
-                      {tag.epc}
-                    </IonChip>
-                  ))}
-                </div>
-              </IonLabel>
-              <IonButtons slot="end">
-                <IonButton onClick={() => {
-                  setEditingItem(item);
-                  setShowEditModal(true);
-                }}>
-                  <IonIcon slot="icon-only" icon={create} />
-                </IonButton>
-                <IonButton onClick={() => handleDeleteItem(item._id)}>
-                  <IonIcon slot="icon-only" icon={trash} />
-                </IonButton>
-              </IonButtons>
-            </IonItem>
-          ))}
-        </IonList>
+        {isLoading ? (
+          <div className="ion-padding">Loading...</div>
+        ) : (
+          <IonList>
+            {filteredItems.map(item => (
+              <IonItem key={item._id}>
+                <IonLabel>
+                  <h2>{item.name}</h2>
+                  <p>{item.description || 'No description'}</p>
+                  <p>Category: {item.category || 'Uncategorized'}</p>
+                  {item.value && <p>Value: ${item.value.toFixed(2)}</p>}
+                </IonLabel>
+                <IonButtons slot="end">
+                  <IonButton onClick={() => {
+                    setEditingItem(item);
+                    setShowEditModal(true);
+                  }}>
+                    <IonIcon slot="icon-only" icon={create} />
+                  </IonButton>
+                  <IonButton onClick={() => handleDeleteItem(item._id)}>
+                    <IonIcon slot="icon-only" icon={trash} />
+                  </IonButton>
+                </IonButtons>
+              </IonItem>
+            ))}
+          </IonList>
+        )}
       </IonContent>
 
       <IonModal isOpen={showAddModal} onDidDismiss={() => {
@@ -373,7 +372,7 @@ const ItemList: React.FC = () => {
           </IonToolbar>
         </IonFooter>
       </IonModal>
-    </>
+    </IonPage>
   );
 };
 

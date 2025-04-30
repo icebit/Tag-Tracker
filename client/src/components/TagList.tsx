@@ -18,6 +18,7 @@ import {
   IonInput,
   IonFooter,
   IonText,
+  IonPage,
 } from '@ionic/react';
 import { useState, useEffect } from 'react';
 import { add, trash, create } from 'ionicons/icons';
@@ -165,7 +166,7 @@ const TagList: React.FC = () => {
       filtered = filtered.filter(tag => 
         tag.epc.toLowerCase().includes(searchText.toLowerCase()) ||
         tag.location.toLowerCase().includes(searchText.toLowerCase()) ||
-        (items.find(item => item._id === tag.item._id)?.name.toLowerCase().includes(searchText.toLowerCase()) || false)
+        tag.item?.name.toLowerCase().includes(searchText.toLowerCase())
       );
     }
 
@@ -184,7 +185,7 @@ const TagList: React.FC = () => {
         case 'location':
           return a.location.localeCompare(b.location);
         case 'item':
-          return a.item._id.localeCompare(b.item._id);
+          return a.item.name.localeCompare(b.item.name);
         case 'lastSeen':
         default:
           return new Date(b.lastSeen).getTime() - new Date(a.lastSeen).getTime();
@@ -261,7 +262,7 @@ const TagList: React.FC = () => {
   };
 
   return (
-    <>
+    <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Tag Management</IonTitle>
@@ -324,11 +325,7 @@ const TagList: React.FC = () => {
                 </IonChip>
                 <IonButtons slot="end">
                   <IonButton onClick={() => {
-                    const tagToEdit = {
-                      ...tag,
-                      lastSeen: tag.lastSeen || new Date().toISOString()
-                    };
-                    setEditingTag(tagToEdit);
+                    setEditingTag(tag);
                     setShowEditModal(true);
                   }}>
                     <IonIcon slot="icon-only" icon={create} />
@@ -508,7 +505,7 @@ const TagList: React.FC = () => {
           </IonToolbar>
         </IonFooter>
       </IonModal>
-    </>
+    </IonPage>
   );
 };
 

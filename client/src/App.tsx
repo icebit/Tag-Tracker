@@ -24,10 +24,9 @@ import {
   settingsOutline,
   cubeOutline
 } from 'ionicons/icons';
-import Home from './pages/Home';
-import Tags from './pages/Tags';
-import Settings from './pages/Settings';
-import Items from './pages/Items';
+import TagList from './components/TagList';
+import ItemList from './components/ItemList';
+import ScanningInterface from './components/ScanningInterface';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -69,15 +68,11 @@ const App: React.FC = () => {
           <IonMenu contentId="main">
             <IonHeader>
               <IonToolbar>
-                <IonTitle>Menu</IonTitle>
+                <IonTitle>Tag Tracker</IonTitle>
               </IonToolbar>
             </IonHeader>
             <IonContent>
               <IonList>
-                <IonItem routerLink="/home" routerDirection="root">
-                  <IonIcon slot="start" icon={homeOutline} />
-                  <IonLabel>Home</IonLabel>
-                </IonItem>
                 <IonItem routerLink="/items" routerDirection="root">
                   <IonIcon slot="start" icon={cubeOutline} />
                   <IonLabel>Items</IonLabel>
@@ -86,29 +81,26 @@ const App: React.FC = () => {
                   <IonIcon slot="start" icon={scanOutline} />
                   <IonLabel>Tags</IonLabel>
                 </IonItem>
-                <IonItem routerLink="/settings" routerDirection="root">
-                  <IonIcon slot="start" icon={settingsOutline} />
-                  <IonLabel>Settings</IonLabel>
+                <IonItem routerLink="/scan" routerDirection="root">
+                  <IonIcon slot="start" icon={scanOutline} />
+                  <IonLabel>Scan</IonLabel>
                 </IonItem>
               </IonList>
             </IonContent>
           </IonMenu>
 
           <IonRouterOutlet id="main">
-            <Route path="/home" exact>
-              <Home />
-            </Route>
             <Route path="/items" exact>
-              <Items />
+              <ItemList />
             </Route>
             <Route path="/tags" exact>
-              <Tags />
+              <TagList />
             </Route>
-            <Route path="/settings" exact>
-              <Settings />
+            <Route path="/scan" exact>
+              <ScanningInterface />
             </Route>
             <Route exact path="/">
-              <Redirect to="/home" />
+              <Redirect to="/tags" />
             </Route>
           </IonRouterOutlet>
         </IonSplitPane>
