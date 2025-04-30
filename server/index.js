@@ -11,16 +11,17 @@ const server = http.createServer(app);
 
 // Configure CORS for Express
 app.use(cors({
-  origin: ["http://localhost:3000", "http://localhost:8100"],
-  methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
+  origin: "http://localhost:8100",
+  methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
 }));
 
 // Configure Socket.IO with CORS
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:3000", "http://localhost:8100"],
-    methods: ["GET", "POST"],
+    origin: "http://localhost:8100",
+    methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"]
   },
