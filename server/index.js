@@ -11,28 +11,15 @@ const server = http.createServer(app);
 
 // Configure CORS for Express
 app.use(cors({
-  origin: ["http://localhost:3000", "http://localhost:3001"],
+  origin: ["http://localhost:3000", "http://localhost:8100"],
   methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
   credentials: true
 }));
 
-// Add Content Security Policy headers
-app.use((req, res, next) => {
-  res.setHeader(
-    'Content-Security-Policy',
-    "default-src 'self'; " +
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.segment.com; " +
-    "style-src 'self' 'unsafe-inline'; " +
-    "img-src 'self' data: https:; " +
-    "connect-src 'self' ws://localhost:3000 http://localhost:3000 http://localhost:3001;"
-  );
-  next();
-});
-
 // Configure Socket.IO with CORS
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    origin: ["http://localhost:3000", "http://localhost:8100"],
     methods: ["GET", "POST"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"]
@@ -50,7 +37,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 // MongoDB Connection
-const MONGODB_URI = 'mongodb+srv://samjharrison8:P3pVnr3CuaWVmkut@cluster0.kdet9ie.mongodb.net/tagtracker?retryWrites=true&w=majority';
+const MONGODB_URI = process.env.MONGODB_URI;
 
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
