@@ -12,7 +12,7 @@ const server = http.createServer(app);
 
 // Configure CORS for Express
 app.use(cors({
-  origin: "http://localhost:8100",
+  origin: ["http://localhost:8100", "https://tagtracker-client-967656305781.us-central1.run.app"],
   methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
@@ -21,7 +21,7 @@ app.use(cors({
 // Configure Socket.IO with CORS
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:8100",
+    origin: ["http://localhost:8100", "https://tagtracker-client-967656305781.us-central1.run.app"],
     methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"]
@@ -39,7 +39,9 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 // MongoDB Connection
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI = process.env.NODE_ENV === 'production' 
+  ? 'mongodb+srv://samjharrison8:MDBword1234@cluster0.kdet9ie.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'  // Replace with your actual MongoDB URI
+  : process.env.MONGODB_URI;
 
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,

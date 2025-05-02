@@ -13,15 +13,8 @@ RUN npm install
 # Copy source code
 COPY . .
 
-# Build TypeScript
-RUN npm run build
-
 # Expose port
 EXPOSE 3000
 
-# Environment variables
-ENV NODE_ENV=production
-ENV PORT=3000
-
-# Start the application
-CMD ["npm", "start"] 
+# Start the server
+CMD ["node", "index.js"] 

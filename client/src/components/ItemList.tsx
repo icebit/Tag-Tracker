@@ -24,6 +24,7 @@ import {
 import { useState, useEffect } from 'react';
 import { add, trash, create } from 'ionicons/icons';
 import axios from 'axios';
+import { API_URL } from '../config';
 
 interface Tag {
   _id: string;
@@ -74,7 +75,7 @@ const ItemList: React.FC = () => {
 
   const fetchItems = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/items');
+      const response = await axios.get(`${API_URL}/api/items`);
       setItems(response.data);
     } catch (error) {
       console.error('Error fetching items:', error);
@@ -92,7 +93,7 @@ const ItemList: React.FC = () => {
         return;
       }
       
-      const response = await axios.post('http://localhost:3000/api/items', newItem);
+      const response = await axios.post(`${API_URL}/api/items`, newItem);
       setItems([...items, response.data]);
       setShowAddModal(false);
       setNewItem({
@@ -111,7 +112,7 @@ const ItemList: React.FC = () => {
 
   const handleDeleteItem = async (itemId: string) => {
     try {
-      await axios.delete(`http://localhost:3000/api/items/${itemId}`);
+      await axios.delete(`${API_URL}/api/items/${itemId}`);
       setItems(items.filter(item => item._id !== itemId));
     } catch (error) {
       console.error('Error deleting item:', error);
@@ -128,7 +129,7 @@ const ItemList: React.FC = () => {
         return;
       }
       
-      const response = await axios.patch(`http://localhost:3000/api/items/${editingItem._id}`, {
+      const response = await axios.patch(`${API_URL}/api/items/${editingItem._id}`, {
         name: editingItem.name,
         description: editingItem.description,
         category: editingItem.category,

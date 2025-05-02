@@ -1,30 +1,31 @@
 # Build stage
 FROM node:18-alpine as build
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
+# Copy package files
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install
 
+# Copy source code
 COPY . .
+
+# Build the app
 RUN npm run build
 
 # Production stage
 FROM nginx:alpine
 
 # Copy built assets from build stage
-COPY --from=build /usr/src/app/build /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
 
 # Copy nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Environment variables
-ENV API_URL=http://localhost:3000
+# Expose port
+EXPOSE 8080
 
-# Replace environment variables in nginx config
-RUN envsubst '${API_URL}' < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/default.conf.tmp \
-    && mv /etc/nginx/conf.d/default.conf.tmp /etc/nginx/conf.d/default.conf
-
-EXPOSE 80
-
+# Start nginx
 CMD ["nginx", "-g", "daemon off;"] 
