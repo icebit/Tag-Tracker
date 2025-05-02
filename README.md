@@ -1,73 +1,54 @@
-# Tag Tracker
+# TagTracker
 
-A lightweight RFID tag tracking system for inventory management.
+A web application for tracking RFID tags and their associated items. Built with React, Ionic, Node.js, and MongoDB.
 
 ## Features
 
-- **Tag Management**
-  - Create, edit, and delete tags
-  - Associate tags with items
-  - Track tag status (inStock, inTransit, delivered, lost)
-  - View and update tag locations
-  - Monitor last seen timestamps
+- Track RFID tags and their current status (in stock, in transit, delivered, lost)
+- Associate tags with items
+- Real-time updates using WebSocket
+- Mobile-friendly interface
+- Tag scanning interface
 
-- **Item Management**
-  - Create, edit, and delete items
-  - Associate multiple tags with items
-  - Add item descriptions
-  - View item-tag relationships
+## Tech Stack
 
-- **Scanning Interface**
-  - Mock scanning simulation
-  - Customizable mock locations
-  - Status updates during scanning
-  - Real-time scan results display
-  - Continuous scanning mode
-  - Real scanning mode (planned for future implementation)
+- Frontend: React, Ionic, TypeScript
+- Backend: Node.js, Express
+- Database: MongoDB
+- Deployment: Google Cloud Run
 
-## Technology Stack
+## Project Structure
 
-- Frontend: React with TypeScript, Ionic Framework
-- Backend: Node.js, Express, MongoDB
-- API: RESTful endpoints for tag and item management
+```
+tagtracker/
+├── client/           # React/Ionic frontend
+├── server/           # Node.js/Express backend
+└── DEPLOY.md         # Deployment instructions
+```
 
 ## Getting Started
 
 1. Clone the repository
 2. Install dependencies:
    ```bash
-   # Install server dependencies
-   cd server
-   npm install
-
-   # Install client dependencies
-   cd ../client
-   npm install
+   cd server && npm install
+   cd ../client && npm install
    ```
-
-3. Start the development servers:
+3. Set up environment variables:
+   - Create a `.env` file in the server directory with your MongoDB connection string
+4. Start the development servers:
    ```bash
-   # Start the server
-   cd server
-   npm run dev
-
-   # Start the client
-   cd ../client
-   npm start
+   # Terminal 1
+   cd server && npm start
+   
+   # Terminal 2
+   cd client && npm run dev
    ```
 
-4. Access the application at `http://localhost:3000`
+## Deployment
 
-## Current Status
+See [DEPLOY.md](DEPLOY.md) for detailed deployment instructions to Google Cloud Run.
 
-The application currently supports:
-- Complete tag and item management
-- Mock scanning with customizable locations and statuses
-- Real-time updates of tag status and location
-- Comprehensive error handling and validation
+## License
 
-Future plans include:
-- Implementation of real RFID scanning
-- Enhanced analytics and reporting
-- User authentication and authorization
-- Mobile app support
+MIT

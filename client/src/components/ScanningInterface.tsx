@@ -24,6 +24,7 @@ import {
 import { scan, refresh, checkmark, close, play, stop } from 'ionicons/icons';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../config';
 
 interface Tag {
   _id: string;
@@ -94,7 +95,7 @@ const ScanningInterface: React.FC = () => {
 
   const fetchAllTags = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/tags');
+      const response = await axios.get(`${API_URL}/api/tags`);
       setAllTags(response.data);
     } catch (error) {
       console.error('Error fetching tags:', error);
@@ -119,7 +120,7 @@ const ScanningInterface: React.FC = () => {
       
       try {
         // Update the tag
-        const response = await axios.patch(`http://localhost:3000/api/tags/${scannedTag._id}`, {
+        const response = await axios.patch(`${API_URL}/api/tags/${scannedTag._id}`, {
           lastSeen: currentTime,
           location: location,
           status: mockStatus
@@ -193,7 +194,7 @@ const ScanningInterface: React.FC = () => {
 
   const updateTagStatus = async (tagId: string, newStatus: Tag['status']) => {
     try {
-      await axios.patch(`http://localhost:3000/api/tags/${tagId}`, {
+      await axios.patch(`${API_URL}/api/tags/${tagId}`, {
         status: newStatus,
         lastSeen: new Date().toISOString()
       });

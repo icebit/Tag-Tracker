@@ -23,6 +23,7 @@ import {
 import { useState, useEffect } from 'react';
 import { add, trash, create } from 'ionicons/icons';
 import axios from 'axios';
+import { API_URL } from '../config';
 
 interface Item {
   _id: string;
@@ -75,7 +76,7 @@ const TagList: React.FC = () => {
 
   const fetchItems = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/items');
+      const response = await axios.get(`${API_URL}/api/items`);
       setItems(response.data);
       return response.data;
     } catch (error) {
@@ -87,7 +88,7 @@ const TagList: React.FC = () => {
 
   const fetchTags = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/tags');
+      const response = await axios.get(`${API_URL}/api/tags`);
       setTags(response.data);
       return response.data;
     } catch (error) {
@@ -135,7 +136,7 @@ const TagList: React.FC = () => {
         return;
       }
 
-      const response = await axios.post('http://localhost:3000/api/tags', {
+      const response = await axios.post(`${API_URL}/api/tags`, {
         epc: newTag.epc,
         status: newTag.status,
         location: newTag.location,
@@ -212,7 +213,7 @@ const TagList: React.FC = () => {
 
   const handleClearAllTags = async () => {
     try {
-      await axios.delete('http://localhost:3000/api/tags');
+      await axios.delete(`${API_URL}/api/tags`);
       setTags([]);
       setFilteredTags([]);
     } catch (error) {
@@ -222,7 +223,7 @@ const TagList: React.FC = () => {
 
   const handleDeleteTag = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:3000/api/tags/${id}`);
+      await axios.delete(`${API_URL}/api/tags/${id}`);
       setTags(tags.filter(tag => tag._id !== id));
       setFilteredTags(filteredTags.filter(tag => tag._id !== id));
     } catch (error) {
@@ -244,7 +245,7 @@ const TagList: React.FC = () => {
         return;
       }
       
-      const response = await axios.patch(`http://localhost:3000/api/tags/${editingTag._id}`, {
+      const response = await axios.patch(`${API_URL}/api/tags/${editingTag._id}`, {
         epc: editingTag.epc,
         status: editingTag.status,
         location: editingTag.location,
