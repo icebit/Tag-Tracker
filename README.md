@@ -1,4 +1,4 @@
-# TagTracker
+# Tag Tracker
 
 A web application for tracking RFID tags and their associated items. Built with React, Ionic, Node.js, and MongoDB.
 
