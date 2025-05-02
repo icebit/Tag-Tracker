@@ -6,7 +6,6 @@ A web application for tracking RFID tags and their associated items. Built with 
 
 - Track RFID tags and their current status (in stock, in transit, delivered, lost)
 - Associate tags with items
-- Real-time updates using WebSocket
 - Mobile-friendly interface
 - Tag scanning interface
 
@@ -37,7 +36,7 @@ tagtracker/
    cd ../client && npm install
    ```
 3. Set up environment variables:
-   - Create a `.env` file in the server directory with your MongoDB connection string
+   - Create a `.env` file in the server directory containing an environment variable `MONGODB_URI` with your MongoDB connection string
 4. Start the development servers:
    ```bash
    # Terminal 1
@@ -50,7 +49,3 @@ tagtracker/
 ## Deployment
 
 See [DEPLOY.md](DEPLOY.md) for detailed deployment instructions to Google Cloud Run.
-
-## License
-
-MIT
